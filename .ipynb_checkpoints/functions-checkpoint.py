@@ -1,6 +1,7 @@
 from utils import DAYS_PER_MONTH
 from utils import MONTH_ORDER
 from utils import DAYS_OF_WEEK
+from pprint import pprint
 
 DEBUG = True
 
@@ -44,7 +45,7 @@ def get_first_day(month):
         date = day.split(' ')
         date_num = date[1]
         date_num = date_num[:-1]
-        print(date_num)
+        
         if int(date_num) == len(month):
             last_day = date[2]
     
@@ -74,4 +75,40 @@ def create_calendar_year(year, first_day):
         
     return calendar_year
 
-print(create_calendar_year(2019, 'Tuesday'))
+y2019 = create_calendar_year(2019, 'Tuesday')
+
+# for month in y2019:
+#     print(month, "\n")
+
+def parse_month(month):
+    if len(month) < 3:
+        month_index = int(month) - 1
+    else:
+        for full_name in MONTH_ORDER:
+            if full_name.lower().startswith(month.lower()):
+                month_index = MONTH_ORDER.index(full_name)
+    
+    return month_index
+
+assert parse_month('December') == 11
+assert parse_month('DEC') == 11
+assert parse_month('Dec') == 11
+assert parse_month('12') == 11
+if DEBUG:
+    print('parse_month check Passed')
+
+def add_task(year, time = None):
+    task = input("Enter Task: ")
+    month = input("Enter Month: ")
+    month = parse_month(month)
+    date = input("Enter Date: ")
+    time = input("Enter Time: ")    
+    task = time + " " + task
+    
+    for day, day_list in year[month].items():
+        key = day[4:].split(',')
+        if key[0] == date:
+            day_list.append(task)
+            
+# add_task(y2019)
+# print(y2019)
