@@ -38,7 +38,7 @@ assert len(FEB) == 28
 if DEBUG:
     print('create_calendar_month check passed')
      
-def get_first_day(month):
+def get_first_day(month): #Gets first day of next month
     last_day = None
     
     for day in month: 
@@ -111,4 +111,21 @@ def add_task(year, time = None):
             day_list.append(task)
             
 # add_task(y2019)
+# print(y2019)
+
+def create_years():
+    years = []
+    first_day = 'Saturday'
+
+    for year in range(2000, 2031):
+        year_list = create_calendar_year(year, first_day)
+        december = year_list[11]
+        first_day = get_first_day(december)
+        years.append(year_list)
+        
+    return years
+        
+y = create_years()
+
+y2019 = y[19]
 # print(y2019)
